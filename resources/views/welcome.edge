@@ -1,20 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Hello Adonis</title>
-  {{ style('style') }}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <title>Chat</title>
 </head>
 <body>
-  <section>
-    <div class="logo"></div>
-    <div class="title"></div>
-    <div class="subtitle">
-      <p>AdonisJs simplicity will make you feel confident about your code</p>
-      <p>
-        Don't know where to start? Read the <a href="https://adonisjs.com/docs">documentation</a>.
-      </p>
+  <div class="container">
+    <div class="text-right mt-3">
+      Joined as <span id="joined-as"></span>
     </div>
-  </section>
+    <div class="d-flex justify-content-between mt-3">
+      <div>
+        Total Users:
+        <span id="total-users"></span>
+      </div>
+      <div>
+        <button type="button" class="btn btn-danger" id="leave-button">Leave</button>
+      </div>
+    </div>
+    <ul id="messages"></ul>
+    <form>
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="Send a message" autocomplete="off">
+      </div>
+    </form>
+    <h3>Joined Users</h3>
+    <ul id="joined-users"></ul>
+  </div>
+
+  {{ script('https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.26.0/polyfill.min.js') }}
+  {{ script('https://unpkg.com/@adonisjs/websocket-client@1.0.9/dist/Ws.browser.js') }}
+  {{ script('/client.js') }}
 </body>
 </html>
