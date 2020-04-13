@@ -18,6 +18,21 @@ ws.on('open', () => {
     joinedAs.textContent = user;
   });
 
+  chat.on('joined', ({ users }) => {
+    let ul = document.createElement('ul');
+    ul.id = 'joined-users';
+
+    users.forEach((user) => {
+      let li = document.createElement('li');
+      li.textContent = user;
+      ul.append(li);
+    });
+
+    let currentUl = document.querySelector('#joined-users');
+    currentUl.replaceWith(ul);
+  });
+
+
   chat.emit('userJoined');
 
   form.addEventListener('submit', (event) => {

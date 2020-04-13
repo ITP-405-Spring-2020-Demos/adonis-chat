@@ -17,7 +17,8 @@ class ChatController {
     users.add(user);
     this.socket.user = user;
     this.socket.emit('joined', {
-      user
+      user,
+      users: Array.from(users)
     });
   }
 
