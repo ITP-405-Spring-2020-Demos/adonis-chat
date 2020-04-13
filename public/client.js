@@ -1,4 +1,9 @@
-const ws = adonis.Ws().connect();
+const ws = adonis.Ws(null, {
+  query: {
+    passcode: '123'
+  }
+}).connect();
+
 const form = document.querySelector('form');
 const input = document.querySelector('input');
 const messages = document.querySelector('#messages');
@@ -8,6 +13,12 @@ const totalUsers = document.getElementById('total-users');
 
 ws.on('open', () => {
   const chat = ws.subscribe('chat');
+
+  chat.on('error', (e) => {
+    toastr.error(e.message);
+    ws.close();
+  });
+
   let usersSet;
 
   chat.on('chatMessage', (message) => {
@@ -18,6 +29,7 @@ ws.on('open', () => {
 
   chat.on('joined', ({ user }) => {
     joinedAs.textContent = user;
+    toastr.success(`Joined as ${user}`)
   });
 
   chat.on('joined', ({ users }) => {
