@@ -4,6 +4,7 @@ const input = document.querySelector('input');
 const messages = document.querySelector('#messages');
 const joinedAs = document.querySelector('#joined-as');
 const leaveButton = document.querySelector('#leave-button');
+const totalUsers = document.getElementById('total-users');
 
 ws.on('open', () => {
   const chat = ws.subscribe('chat');
@@ -24,6 +25,10 @@ ws.on('open', () => {
   });
 
   chat.on('joined', ({ users }) => {
+    totalUsers.textContent = users.length;
+  });
+
+  chat.on('joined', ({ users }) => {
     let ul = document.createElement('ul');
     ul.id = 'joined-users';
 
@@ -38,9 +43,13 @@ ws.on('open', () => {
   });
 
   chat.on('newUser', (user) => {
+    usersSet.add(user);
+
     let li = document.createElement('li');
     li.textContent = user;
     document.querySelector('#joined-users').append(li);
+
+    totalUsers.textContent = usersSet.size;
   });
 
   chat.on('userLeft', (user) => {
@@ -57,6 +66,8 @@ ws.on('open', () => {
 
     let currentUl = document.querySelector('#joined-users');
     currentUl.replaceWith(ul);
+
+    totalUsers.textContent = usersSet.size;
   });
 
   chat.emit('userJoined');
