@@ -2,6 +2,7 @@ const ws = adonis.Ws().connect();
 const form = document.querySelector('form');
 const input = document.querySelector('input');
 const messages = document.querySelector('#messages');
+const joinedAs = document.querySelector('#joined-as');
 
 ws.on('open', () => {
   const chat = ws.subscribe('chat');
@@ -11,6 +12,12 @@ ws.on('open', () => {
     li.textContent = message.body;
     messages.append(li);
   });
+
+  chat.on('joined', ({ user }) => {
+    joinedAs.textContent = user;
+  });
+
+  chat.emit('userJoined');
 
   form.addEventListener('submit', (event) => {
     event.preventDefault();
