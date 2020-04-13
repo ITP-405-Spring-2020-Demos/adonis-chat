@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
   <title>Chat</title>
 </head>
 <body>
@@ -32,6 +33,8 @@
 
   {{ script('https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.26.0/polyfill.min.js') }}
   {{ script('https://unpkg.com/@adonisjs/websocket-client@1.0.9/dist/Ws.browser.js') }}
+  {{ script('https://code.jquery.com/jquery-3.5.0.min.js') }}
+  {{ script('https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js') }}
   {{ script('/client.js') }}
 </body>
 </html>
