@@ -20,6 +20,8 @@ class ChatController {
       user,
       users: Array.from(users)
     });
+
+    this.socket.broadcast('newUser', user); // Emit event to everyone except yourself
   }
 
   onUserLeft() {
