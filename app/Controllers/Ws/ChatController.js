@@ -26,6 +26,7 @@ class ChatController {
 
   onUserLeft() {
     users.delete(this.socket.user);
+    this.socket.broadcast('userLeft', this.socket.user);
   }
 }
 
