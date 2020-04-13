@@ -3,6 +3,7 @@ const form = document.querySelector('form');
 const input = document.querySelector('input');
 const messages = document.querySelector('#messages');
 const joinedAs = document.querySelector('#joined-as');
+const leaveButton = document.querySelector('#leave-button');
 
 ws.on('open', () => {
   const chat = ws.subscribe('chat');
@@ -30,5 +31,17 @@ ws.on('open', () => {
         body: message
       });
     }
+  });
+
+  leaveButton.addEventListener('click', function() {
+    ws.getSubscription('chat').emit('userLeft');
+    ws.close();
+    this.disabled = true;
+    // TODO: redirect to another page
+  });
+
+  window.addEventListener('beforeunload', () => {
+    ws.getSubscription('chat').emit('userLeft');
+    ws.close();
   });
 });
