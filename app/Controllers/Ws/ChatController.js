@@ -5,6 +5,10 @@ class ChatController {
     this.socket = socket
     this.request = request
   }
+
+  onChatMessage (message) {
+    this.socket.broadcastToAll('chatMessage', message)
+  }
 }
 
 module.exports = ChatController
