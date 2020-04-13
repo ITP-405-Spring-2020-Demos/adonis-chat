@@ -7,6 +7,7 @@ const leaveButton = document.querySelector('#leave-button');
 
 ws.on('open', () => {
   const chat = ws.subscribe('chat');
+  let usersSet;
 
   chat.on('chatMessage', (message) => {
     let li = document.createElement('li');
@@ -16,6 +17,10 @@ ws.on('open', () => {
 
   chat.on('joined', ({ user }) => {
     joinedAs.textContent = user;
+  });
+
+  chat.on('joined', ({ users }) => {
+    usersSet = new Set(users);
   });
 
   chat.on('joined', ({ users }) => {
@@ -36,6 +41,22 @@ ws.on('open', () => {
     let li = document.createElement('li');
     li.textContent = user;
     document.querySelector('#joined-users').append(li);
+  });
+
+  chat.on('userLeft', (user) => {
+    usersSet.delete(user);
+
+    let ul = document.createElement('ul');
+    ul.id = 'joined-users';
+
+    usersSet.forEach((user) => {
+      let li = document.createElement('li');
+      li.textContent = user;
+      ul.append(li);
+    });
+
+    let currentUl = document.querySelector('#joined-users');
+    currentUl.replaceWith(ul);
   });
 
   chat.emit('userJoined');
