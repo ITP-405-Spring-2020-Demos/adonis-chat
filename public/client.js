@@ -32,6 +32,11 @@ ws.on('open', () => {
     currentUl.replaceWith(ul);
   });
 
+  chat.on('newUser', (user) => {
+    let li = document.createElement('li');
+    li.textContent = user;
+    document.querySelector('#joined-users').append(li);
+  });
 
   chat.emit('userJoined');
 
